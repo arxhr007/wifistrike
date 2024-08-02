@@ -1,4 +1,4 @@
-<p align="center" ><img src="" data-canonical-src="https://raw.githubusercontent.com/BLINKING-IDIOT/Aliens_eye/main/photos/logo.png" width="450" height="400" /></p>
+<p align="center" ><img src="https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/logo.jpg" data-canonical-src="https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/logo.jpg" width="450" height="400" /></p>
 <h1 align="center">Pure python wifi deauth</h1>
 <h1 align="center">Doesn't use any aircrack-ng tools</h1>
 <hr>
