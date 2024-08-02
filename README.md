@@ -86,5 +86,9 @@ sudo wifistrike -sw // to get the wifi available
 sudo wifistrike -st // to get the target available also can define gateway(optinal) -g <gateway_name>
 ```
 
+# To Uninstallation in Linux:
+```shell script
+sudo bash uninstall.sh
+```
 ## Enjoy!
 <p><img aling="center"src=""/></p>
