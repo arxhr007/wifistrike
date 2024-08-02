@@ -49,7 +49,7 @@ sudo bash install.sh
 
 
 # Usage :
-***It need root privilege to  manipulate network interfaces, perform packet sniffing and injection, and execute system commands***
+***[!] It need root privilege to  manipulate network interfaces, perform packet sniffing and injection, and execute system commands***
 <br>
 **To auto detect network interfaces and show the attack options**
 ```shell script
