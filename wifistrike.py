@@ -180,7 +180,6 @@ def man_interface(interface):
 def main():
     os.system("clear")
     print(banner)
-    print(f"{p}Disclaimer: {r}The information, scripts, or instructions provided are for educational purposes only. \nI am not responsible for any damage or issues that may arise from using these resources on your device. \nUse at your own risk.\n")
     global gateway_mac
     parser = argparse.ArgumentParser(description="Wi-Fi deauth script")
     parser.add_argument("-man", "--manage", type=str, help="Set interface to managed mode")
