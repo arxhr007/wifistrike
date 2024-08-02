@@ -113,4 +113,4 @@ sudo wifistrike -i [interface] -g [gateway_mac] -t [target_mac] > /dev/null 2>&1
 sudo bash uninstall.sh
 ```
 ## Enjoy!
-<p><img aling="center"src="https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/Screenshot%20from%202024-08-02%2013-54-33.png"/></p>
+<p><img aling="center"src="https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/Screenshot%20from%202024-08-02%2019-44-52.png"/></p>
