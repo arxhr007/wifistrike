@@ -1,6 +1,6 @@
 <p align="center" ><img src="" data-canonical-src="https://raw.githubusercontent.com/BLINKING-IDIOT/Aliens_eye/main/photos/logo.png" width="450" height="400" /></p>
 <h1 align="center">Pure python wifi deauth</h1>
-<h1 align="center">doesn't use aircrack-ng tools</h1>
+<h1 align="center">Doesn't use any aircrack-ng tools</h1>
 <hr>
 <em><h5 align="center">(Programming Language - Python 3)</h5></em>
 <p align="center">
@@ -49,6 +49,8 @@ sudo bash install.sh
 
 
 # Usage :
+***It need root privilege to  manipulate network interfaces, perform packet sniffing and injection, and execute system commands***
+<br>
 **To auto detect network interfaces and show the attack options**
 ```shell script
 sudo wifistrike
