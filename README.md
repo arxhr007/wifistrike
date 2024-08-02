@@ -91,4 +91,4 @@ sudo wifistrike -st // to get the target available also can define gateway(optin
 sudo bash uninstall.sh
 ```
 ## Enjoy!
-<p><img aling="center"src=""/></p>
+<p><img aling="center"src="https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/Screenshot%20from%202024-08-02%2013-54-33.png"/></p>
