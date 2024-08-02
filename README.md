@@ -19,7 +19,7 @@ Before you begin, ensure you have the following:
 
 - Python 3.x
 - `pip` (Python package installer)
-- `psutil` and `scapy` Python libraries (automatically installed with `requirements.txt`)
+- `psutil`,`argparse` and `scapy` Python libraries (automatically installed with `requirements.txt`)
 - need a wifi adapter with monitor mode and packet injection
 ## if they are not installed, install it by:
 * for linux:
