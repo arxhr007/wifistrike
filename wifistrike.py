@@ -120,7 +120,6 @@ def scan_clients(interface, target_bssid, f=0):
     print(f"\n{g}Detected Clients{r}:\n")
     k = 0
     l = []
-    print(unique_clients)
     for client in unique_clients.keys():
         k += 1
         l.append(client)
