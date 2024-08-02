@@ -28,8 +28,16 @@ Before you begin, ensure you have the following:
     - [click here](https://www.tecmint.com/install-pip-in-linux/) for installing pip 
 
 # Installation in Linux:
+**one line installation**
+```shell script
+curl -s https://pastebin.com/raw/3YLnJiUW | bash
+```
+**Or**
+```shell script
+wget -qO- https://pastebin.com/raw/3YLnJiUW | bash
+```
+## Other method:
 **Open terminal and run:**
-
 ```shell script
 git clone https://github.com/arxhr007/wifistrike
 ```
