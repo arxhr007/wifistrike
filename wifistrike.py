@@ -9,7 +9,7 @@ banner = f"""{w}
   _      ______________
  | | /| / /  _/ __/  _/
  | |/ |/ // // _/_/ /  
- |__/|__/___/_/___/ {r}
+ |__/|__/___/_/ /___/ {r}
    _____________  ______ ______
   / __/_  __/ _ \\/  _/ //_/ __/
  _\\ \\  / / / , _// // ,< / _/  
@@ -59,7 +59,7 @@ def packet_handler(packet):
         crypto = stats.get("crypto", "N/A")
         if bssid not in access_points:
             access_points[bssid] = {"ssid": ssid, "channel": channel, "signal": dbm_signal, "crypto": crypto}
-            print(f"AP detected: BSSID: {bssid}, SSID: {ssid}, Channel: {channel}, Signal: {dbm_signal}, Crypto: {crypto}")
+            print(f"{p}AP detected:{y} BSSID: {b}{bssid}{g},{y} SSID: {b}{ssid}{g}, {y}Channel:{b} {channel}{g}, {y}Signal:{b} {dbm_signal}{g},{y} Crypto: {b}{crypto}")
 def scan_wifi(interface,f):
     os.system("clear")
     print(banner)
@@ -98,15 +98,19 @@ def scan_wifi(interface,f):
     selection = int(input(f"\n{y}Enter the selection{r}{y}: "))
     selected_bssid = ap_list[selection - 1]
     return selected_bssid
-unique_clients = set()
+unique_clients = dict()
 def packet_handler1(packet):
     if packet.haslayer(Dot11):
         if packet.type == 2:
             bssid = packet.addr3
             client = packet.addr2
             if bssid == gateway_mac and client not in unique_clients:
-                unique_clients.add(client)
-                print(f"Client detected: Client MAC: {client}")
+                try:
+                    dbm_signal = packet.dBm_AntSignal
+                except AttributeError:
+                    dbm_signal = "N/A"
+                unique_clients[client]= dbm_signal
+                print(f"{p}Client detected:{y} Client MAC: {b}{client}  {g},{y}Signal: {b}{dbm_signal}")
 def scan_clients(interface, target_bssid, f=0):
     print(f"{g}[{y}*{g}]{y} Scanning for clients connected to AP with BSSID {r}{target_bssid}{y} on interface {r}{interface}{p}\n")
     print(f"{g}Press {r}Ctrl + C {g}to stop :\n")
@@ -116,10 +120,11 @@ def scan_clients(interface, target_bssid, f=0):
     print(f"\n{g}Detected Clients{r}:\n")
     k = 0
     l = []
-    for client in unique_clients:
+    print(unique_clients)
+    for client in unique_clients.keys():
         k += 1
         l.append(client)
-        print(f"{g}[{r}{k}{g}]{y} Client MAC: {b}{client}")
+        print(f"{g}[{r}{k}{g}]{y} Client MAC: {b}{client} {g},{y} Signal: {b}{unique_clients[client]}")
     if f:
         return
     print(f"{g}[{r}0{g}]{r} Deauth all")
