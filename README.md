@@ -1,5 +1,5 @@
 <p align="center" ><img src="https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/logo.png" data-canonical-src="https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/logo.png" width="450" height="500" /></p>
-<h1 align="center">Pure python Automated wifi deauth</h1>
+<h1 align="center">Pure python Automated wifi deauther</h1>
 <h1 align="center">What's speacial: Its written in pure python and Doesn't use any aircrack-ng tools</h1>
 <hr>
 <em><h5 align="center">(Programming Language - Python 3)</h5></em>
