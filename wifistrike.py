@@ -45,34 +45,59 @@ def set_manage_mode(interface):
         print(f"{r}Failed to set {y}{interface} {r}to managed mode: {e}")
         subprocess.run(["systemctl", "start", "NetworkManager"], check=True)
 access_points = {}
+stop_sniffing = False
 def packet_handler(packet):
     if packet.haslayer(Dot11Beacon) or packet.haslayer(Dot11ProbeResp):
         bssid = packet[Dot11].addr2
-        ssid = packet[Dot11Elt].info.decode() if packet[Dot11Elt].info else "<hidden>"
-        channel = int(ord(packet[Dot11Elt:3].info))
+        ssid = packet[Dot11Elt].info.decode() if packet.haslayer(Dot11Elt) else "<hidden>"
+        try:
+            dbm_signal = packet.dBm_AntSignal
+        except AttributeError:
+            dbm_signal = "N/A"
+        stats = packet[Dot11Beacon].network_stats() if packet.haslayer(Dot11Beacon) else {}
+        channel = stats.get("channel", "N/A")
+        crypto = stats.get("crypto", "N/A")
         if bssid not in access_points:
-            access_points[bssid] = {"ssid": ssid, "channel": channel}
-            print(f"AP detected: BSSID: {bssid}, SSID: {ssid}, Channel: {channel}")
-def scan_wifi(interface, f):
+            access_points[bssid] = {"ssid": ssid, "channel": channel, "signal": dbm_signal, "crypto": crypto}
+            print(f"AP detected: BSSID: {bssid}, SSID: {ssid}, Channel: {channel}, Signal: {dbm_signal}, Crypto: {crypto}")
+def scan_wifi(interface,f):
     os.system("clear")
     print(banner)
     print(f"{g}Interface {r}{interface} {g}set to monitor mode.{y}")
     print(f"{g}[{r}*{g}]{y} Scanning for Wi-Fi APs on interface {r}{interface}{p}\n")
-    print(f"{g}Press {r}Ctrl + C {g}to stop {y}({g}default{b} 30s{y}){p}\n")
-    sniff(iface=interface, prn=packet_handler, timeout=30)
+    print(f"{g}Press {r}Ctrl + C {g}to stop:{p}\n")
+    global stop_sniffing 
+    def change_channel():
+        global stop_sniffing
+        ch = 1
+        while not stop_sniffing:
+            os.system(f"iwconfig {interface} channel {ch}")
+            ch = ch % 14 + 1
+            time.sleep(0.5)
+    channel_thread = threading.Thread(target=change_channel)
+    channel_thread.daemon = True
+    channel_thread.start()
+    try:
+        sniff(iface=interface, prn=packet_handler, stop_filter=lambda x: stop_sniffing)
+    except KeyboardInterrupt:
+        stop_sniffing = True
     os.system("clear")
     print(banner)
-    print(f"{g}Detected Access Points{r}:\n")
+    print(f"{y}Detected Access Points{r}:\n")
     k = 0
-    l = []
+    ap_list = []
     for bssid, info in access_points.items():
         k += 1
-        l.append(bssid)
-        print(f"{g}[{r}{k}{g}] {y}BSSID:{b} {bssid}{g}, {y}SSID: {b}{info['ssid']}{g}, {y}Channel:{b} {info['channel']}")
-    if f == 1:
+        ap_list.append(bssid)
+        print(f"{g}[{r}{k}{g}]{y} BSSID: {b}{bssid}{g},{y} SSID: {b}{info['ssid']}{g}, {y}Channel:{b} {info['channel']}{g}, {y}Signal:{b} {info['signal']}{g},{y} Crypto: {b}{info['crypto']}")
+    if k == 0:
+        print(f"{r}No access points detected.")
+        return None
+    if (f):
         return
-    x = int(input(f"{y}\nEnter the selection{r}:{y} "))
-    return l[x - 1]
+    selection = int(input(f"\n{y}Enter the selection{r}{y}: "))
+    selected_bssid = ap_list[selection - 1]
+    return selected_bssid
 unique_clients = set()
 def packet_handler1(packet):
     if packet.haslayer(Dot11):
@@ -84,8 +109,8 @@ def packet_handler1(packet):
                 print(f"Client detected: Client MAC: {client}")
 def scan_clients(interface, target_bssid, f=0):
     print(f"{g}[{y}*{g}]{y} Scanning for clients connected to AP with BSSID {r}{target_bssid}{y} on interface {r}{interface}{p}\n")
-    print(f"{g}Press {r}Ctrl + C {g}to stop {y}({g}default{b} 60s{y}){p}\n")
-    sniff(iface=interface, prn=packet_handler1, timeout=60)
+    print(f"{g}Press {r}Ctrl + C {g}to stop :\n")
+    sniff(iface=interface, prn=packet_handler1)
     os.system("clear")
     print(banner)
     print(f"\n{g}Detected Clients{r}:\n")
