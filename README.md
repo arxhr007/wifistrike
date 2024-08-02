@@ -37,17 +37,19 @@ git clone https://github.com/arxhr007/wifistrike
 ```shell script
 cd wifistrike
 ```
+```shell script
+sudo pip install -r requirements.txt
+```
 
 ```shell script
-bash install.sh
+sudo bash install.sh
 ```
 
 * Now wifistrike is Succesfully installed in your system
 
 
-* done!
 # Usage :
-**To auto detect network interface and show the attack options**
+**To auto detect network interfaces and show the attack options**
 ```shell script
 sudo wifistrike
 ```
@@ -55,21 +57,18 @@ sudo wifistrike
 ```shell script
 sudo wifistrike -i <interface_name>
 ```
-**To set gateway manully**
+**To set gateway manually**
 ```shell script
 sudo wifistrike -g <gateway_mac>
 ```
-**To set target manully**
+**To set target manually**
 ```shell script
 sudo wifistrike -t <target_mac> // (use `-t 0` for deauth all)
 ```
-**To set gateway manully**
-```shell script
-sudo wifistrike -g <gateway_mac>
-```
+
 **you can use multiple flags and if one is missing it will compensate it**
 ```shell script
-sudo wifistrike -i <network_interface -g <gateway_mac> -t <target_mac>
+sudo wifistrike -i <network_interface> -g <gateway_mac> -t <target_mac>
 ```
 **In case any error you need to change network interface to manage or moniter mode**
 ```shell script
