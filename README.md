@@ -5,7 +5,7 @@
 <h2 align="center">Motive:I couldn't find a python script that doesn't use Aircrack-ng suite, so i made one ;)</h2>
 
 <hr>
-
+<em><h5 align="center">(Author - arxhr007)</h5></em>
 <em><h5 align="center">(Programming Language - Python 3)</h5></em>
 <p align="center">
 <a href="#"><img alt="MH-DDoS forks" src="https://img.shields.io/github/forks/arxhr007/wifistrike?style=for-the-badge"></a>
