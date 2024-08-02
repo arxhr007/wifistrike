@@ -59,7 +59,9 @@ sudo bash install.sh
 
 # Usage :
 ***[!] It need root privilege to  manipulate network interfaces, perform packet sniffing and injection, and execute system commands***
-<br>
+
+<hr>
+
 **To auto detect network interfaces and show the attack options**
 ```shell script
 sudo wifistrike
