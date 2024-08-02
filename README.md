@@ -2,6 +2,7 @@
 <h1 align="center">Pure python Automated wifi deauther</h1>
 <h1 align="center">What's speacial: Its written in pure python and Doesn't use any aircrack-ng tools</h1>
 <hr>
+
 <em><h5 align="center">(Programming Language - Python 3)</h5></em>
 <p align="center">
 <a href="#"><img alt="MH-DDoS forks" src="https://img.shields.io/github/forks/arxhr007/wifistrike?style=for-the-badge"></a>
@@ -12,7 +13,7 @@
 </p>
 
 # Can be installed in any linux system
-
+**Disclaimer: The information, scripts, or instructions provided are for educational purposes only. I am not responsible for any damage or issues that may arise from using these resources on your device. Use at your own risk.**
 ## Requirements
 
 Before you begin, ensure you have the following:
