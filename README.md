@@ -117,3 +117,8 @@ sudo bash uninstall.sh
 ```
 ## Enjoy!
 <p><img aling="center"src="https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/Screenshot%20from%202024-08-02%2019-44-52.png"/></p>
+
+# Also checkout:
+
+<a href="https://github.com/arxhr007/Aliens_eye" target="blank"><img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=arxhr007&repo=Aliens_eye&show_icons=true&theme=chartreuse-dark"></a>
+<a href="https://github.com/arxhr007/Gamer-tux" target="blank"><img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=arxhr007&repo=Gamer-tux&show_icons=true&theme=chartreuse-dark"></a>
