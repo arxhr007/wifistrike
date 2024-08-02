@@ -65,25 +65,35 @@ sudo wifistrike
 ```
 **To manually select network interface**
 ```shell script
-sudo wifistrike -i <interface_name>
+sudo wifistrike -i [interface_name]
+```
+**ex:**
+```shell script
+sudo wifistrike -i wlo1
 ```
 **To set gateway manually**
 ```shell script
-sudo wifistrike -g <gateway_mac>
+sudo wifistrike -g [gateway_mac]
 ```
 **To set target manually**
 ```shell script
-sudo wifistrike -t <target_mac> // (use `-t 0` for deauth all)
+sudo wifistrike -t [target_mac] // (use `-t 0` for deauth all)
 ```
 
 **you can use multiple flags and if one is missing it will compensate it**
 ```shell script
-sudo wifistrike -i <network_interface> -g <gateway_mac> -t <target_mac>
+sudo wifistrike -i [network_interface] -g [gateway_mac] -t [target_mac]
 ```
+**ex:**
+```shell script
+sudo wifistrike -i wlo1 -g 14:54:b5:s3:s6 -t 12:84:k9:6f:20
+```
+
+
 **In case any error you need to change network interface to manage or moniter mode**
 ```shell script
-sudo wifistrike -man <network_interface> // to manage mode
-sudo wifistrike -mon <network_interface> // to moniter mode
+sudo wifistrike -man [network_interface] // to manage mode
+sudo wifistrike -mon [network_interface] // to moniter mode
 
 ```
 
@@ -92,6 +102,10 @@ sudo wifistrike -mon <network_interface> // to moniter mode
 sudo wifistrike -l // to get the network interfaces
 sudo wifistrike -sw // to get the wifi available
 sudo wifistrike -st // to get the target available also can define gateway(optinal) -g <gateway_name>
+```
+**to run without any output like silent mode**
+```shell script
+sudo wifistrike -i [interface] -g [gateway_mac] -t [target_mac] > /dev/null 2>&1
 ```
 
 # To Uninstallation in Linux:
