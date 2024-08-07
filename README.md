@@ -1,4 +1,4 @@
-<p align="center" ><img src="https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/logo.png" data-canonical-src="https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/logo.png" width="450" height="500" /></p>
+<p align="center" ><img src="https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/logo.png" data-canonical-src="https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/logo.png" width="450" height="450" /></p>
 <h1 align="center">Pure python Automated wifi deauther</h1>
 <h2 align="center">Motive: I couldn't find a pure python script that doesn't use Aircrack-ng suite, so i made one ;)</h2>
 
