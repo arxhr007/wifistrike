@@ -182,22 +182,23 @@ def main():
     print(banner)
     global gateway_mac
     parser = argparse.ArgumentParser(description="Wi-Fi deauth script")
-    parser.add_argument("-man <interface name>", type=str, help="Set interface to managed mode")
-    parser.add_argument("-mon <interface name>", type=str, help="Set interface to monitor mode")
-    parser.add_argument("-i <interface_name>", type=str, help="Set interface to use")
+    parser.add_argument("--man", type=str, help="Set interface to managed mode")
+    parser.add_argument("--mon", type=str, help="Set interface to monitor mode")
+    parser.add_argument("--interface", type=str, help="Set interface to use")
     parser.add_argument("-l", "--list_interface", action='store_true', help="List interfaces to use")
-    parser.add_argument("-t <target mac address>", type=str, help="Target MAC address")
-    parser.add_argument("-g <gateway mac adress>", type=str, help="Gateway MAC address")
+    parser.add_argument("-t", "--target_mac", type=str, help="Target MAC address")
+    parser.add_argument("-g", "--gateway_mac", type=str, help="Gateway MAC address")
     parser.add_argument("-sw", "--scan_wifi", action='store_true', help="Scan Wi-Fi available")
     parser.add_argument("-st", "--scan_target", action='store_true', help="Scan clients available")
     args = parser.parse_args()
+
     if os.geteuid() != 0:
         print(f"{g}[{r}!{g}]{r} Run it as root{w}\n")
         print(f"{g}ex: {r}$ {y}sudo wifistrike{w}\n")
         exit()
-    if args.manage:
-        if args.manage in get_all_interfaces():
-            set_manage_mode(args.manage)
+    if args.man:
+        if args.man in get_all_interfaces():
+            set_manage_mode(args.man)
         else:
             print(f"{r}No interface found with that name{w}")
         return
@@ -223,9 +224,9 @@ def main():
         scan_clients(interface, gateway_mac, 1)
         set_manage_mode(interface)
         exit()
-    elif args.monitor:
-        if args.monitor in get_all_interfaces():
-            set_monitor_mode(args.monitor)
+    elif args.mon:
+        if args.mon in get_all_interfaces():
+            set_monitor_mode(args.mon)
         else:
             print(f"{r}No interface found with that name{w}")
         return
