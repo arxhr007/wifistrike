@@ -21,4 +21,5 @@ printf "\n\n"
 rm /usr/bin/wifistrike &>/dev/null
 cp wifistrike.py /usr/bin/wifistrike
 chmod +x /usr/bin/wifistrike
+pip install -r requirements.txt
 printf "\n\ninstalled successfully!"
