@@ -48,3 +48,5 @@ if [[ $? -ne 0 ]]; then
 fi
 
 echo "Installed successfully!"
+echo "Run using : sudo wifistrike"
+
