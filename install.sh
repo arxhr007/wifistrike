@@ -10,8 +10,6 @@ if [[ $(id -u) -ne 0 ]] ; then
     exit
 fi
 
-echo "NOTE: You also need to install necessary packages from requirements.txt"
-
 for i in 3 2 1
 do
     echo "Starting installation process in ${i}";
