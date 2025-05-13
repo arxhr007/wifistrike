@@ -191,7 +191,6 @@ def main():
     parser.add_argument("-sw", "--scan_wifi", action='store_true', help="Scan Wi-Fi available")
     parser.add_argument("-st", "--scan_target", action='store_true', help="Scan clients available")
     args = parser.parse_args()
-
     if os.geteuid() != 0:
         print(f"{g}[{r}!{g}]{r} Run it as root{w}\n")
         print(f"{g}ex: {r}$ {y}sudo wifistrike{w}\n")
