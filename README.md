@@ -49,6 +49,10 @@ WiFiStrike offers several benefits compared to traditional Aircrack-ng based too
 
 WiFiStrike is designed for network administrators and security professionals to test their own networks. Using this tool on networks without explicit permission is illegal in most jurisdictions and unethical. The author accepts NO responsibility for misuse of this tool.
 
+See [SECURITY.md](SECURITY.md) for authorized testing scenarios, the
+real-world impact of deauthentication attacks, a controlled lab-testing
+procedure, and how to report vulnerabilities in the tool itself.
+
 ## 🔧 Requirements
 
 - Linux-based operating system
@@ -66,31 +70,43 @@ WiFiStrike works with most WiFi adapters that support monitor mode ( Most modern
 
 ## 📦 Installation
 
-### Quick Installation (One-Line Command)
+Installation requires root (it copies a script into `/usr/bin` and installs
+packages), so **do not pipe a downloaded script straight into `bash`** —
+always fetch the source, review it, and verify it's what you expect before
+running anything as root.
+
+### Verifiable Installation
 
 ```bash
-curl -s https://pastebin.com/raw/3YLnJiUW | bash
-```
-or
-```bash
-wget -qO- https://pastebin.com/raw/3YLnJiUW | bash
-```
-
-### Manual Installation
-
-```bash
-# Clone the repository
+# 1. Clone the repository (or download+extract a tagged release instead)
 git clone https://github.com/arxhr007/wifistrike
-
-# Navigate to the directory
 cd wifistrike
 
-# Install required Python packages
+# 2. Verify you're on a commit/tag you trust, e.g. check the commit hash
+#    matches what's shown on GitHub for this repo/tag:
+git log -1 --format="%H %ci"
+
+# 3. Read install.sh before running it — it will run as root
+cat install.sh
+
+# 4. Install required Python packages
 sudo pip install -r requirements.txt
 
-# Run the installation script
+# 5. Run the installation script
 sudo bash install.sh
 ```
+
+If you prefer not to clone with `git`, download a specific release
+archive from the [Releases page](https://github.com/arxhr007/wifistrike/releases)
+or the [repository's commit history](https://github.com/arxhr007/wifistrike/commits/main)
+over HTTPS from `github.com` directly (not a third-party paste site), so the
+content you're running is attributable to a specific, auditable commit
+rather than an unversioned, unreviewable paste.
+
+### Uninstall is Reversible
+
+See [Uninstallation](#%EF%B8%8F-uninstallation) below — `uninstall.sh` removes
+`/usr/bin/wifistrike` if you want to remove the tool.
 
 ## 🚀 Usage
 
@@ -169,6 +185,21 @@ sudo wifistrike -i [interface] -g [gateway_mac] -t [target_mac] > /dev/null 2>&1
 | `-st`, `--scan_target` | Scan for connected clients |
 | `--man` | Set interface to managed mode |
 | `--mon` | Set interface to monitor mode |
+
+## 🧪 Tests
+
+Unit tests build and parse synthetic Scapy packets in-process (no interface,
+root, or radio required) to validate frame construction and parsing logic.
+
+```bash
+pip install -r requirements.txt -r requirements-dev.txt
+pytest
+```
+
+See [`tests/README.md`](tests/README.md) and
+[SECURITY.md's lab-testing section](SECURITY.md#controlled-lab-testing) for
+details, including how to move from these offline tests to controlled,
+RF-isolated lab testing.
 
 ## 🗑️ Uninstallation
 

