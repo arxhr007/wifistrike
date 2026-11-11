@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/logo.png" width="350" height="350" alt="WiFiStrike Logo">
+  <img src="https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/logo.svg" width="200" height="200" alt="WiFiStrike Logo">
 </p>
 
 # WiFiStrike
@@ -210,6 +210,32 @@ sudo bash uninstall.sh
 ## 📸 Screenshots
 
 ![WiFiStrike in action](https://raw.githubusercontent.com/arxhr007/wifistrike/main/img/Screenshot%20from%202024-08-02%2019-44-52.png)
+
+## 🤝 Contributing
+
+Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md)
+before opening an issue or pull request — it covers the offline-only testing
+policy, the "no real-world targets in bug reports" rule, and the coding
+conventions for this project.
+
+All participation is governed by our
+[Code of Conduct](CODE_OF_CONDUCT.md).
+
+## 🛡️ Responsible Use & Platform Policy
+
+This repository is published as a **dual-use security research and education**
+project. It does not host, deliver, or automate attacks against third parties;
+it is source code intended for use by the owner of a network, or by testers
+with **explicit written authorization**, in a controlled environment.
+
+- Permitted uses, legal notices, and a controlled lab procedure are documented
+  in [SECURITY.md](SECURITY.md).
+- Using this tool against networks you do not own or lack written permission
+  to test is illegal in most jurisdictions and is **not** endorsed or supported.
+- In line with GitHub's Acceptable Use Policies on dual-use security content,
+  this project is provided with the documentation and context needed to use it
+  lawfully. Reports of misuse or abuse should go to the maintainer and, where
+  applicable, GitHub.
 
 ## 👨‍💻 Author
 
