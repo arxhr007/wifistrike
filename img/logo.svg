@@ -1,12 +1,12 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WiFiStrike logo">
   <rect width="512" height="512" rx="112" fill="#0D1117"/>
-  <g fill="none" stroke="#E6EDF3" stroke-width="26" stroke-linecap="round">
-    <path d="M198.7 315.8 A70 70 0 0 0 313.3 315.8"/>
-    <path d="M141.3 275.7 A140 140 0 0 0 370.7 275.7"/>
-    <path d="M84 235.5 A210 210 0 0 0 428 235.5"/>
+  <!-- wifi signal arcs fanning up from the source dot (subtle, behind) -->
+  <g fill="none" stroke="#E6EDF3" stroke-opacity="0.28" stroke-width="22" stroke-linecap="round">
+    <path d="M215.8 302.7 A70 70 0 0 1 296.2 302.7"/>
+    <path d="M178.6 249.4 A135 135 0 0 1 333.4 249.4"/>
+    <path d="M141.3 196.2 A200 200 0 0 1 370.7 196.2"/>
   </g>
-  <circle cx="256" cy="356" r="17" fill="#E6EDF3"/>
-  <!-- strike slash: dark gap underneath, red bolt on top -->
-  <line x1="150" y1="150" x2="372" y2="402" stroke="#0D1117" stroke-width="54" stroke-linecap="round"/>
-  <line x1="150" y1="150" x2="372" y2="402" stroke="#FF3B30" stroke-width="26" stroke-linecap="round"/>
+  <circle cx="256" cy="360" r="16" fill="#E6EDF3" fill-opacity="0.28"/>
+  <!-- strike: lightning bolt (hero) -->
+  <path transform="translate(100,100) scale(13)" d="M7 2v11h3v9l7-12h-4l4-8z" fill="#FF4D2E"/>
 </svg>
